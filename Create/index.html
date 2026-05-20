@@ -1,659 +1,643 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eKickHub — Create a Competition</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0d0d14;--bg2:#13131f;--bg3:#1a1a2a;--bg4:#20203a;
-  --border:#2a2a45;--border2:#3a3a60;
-  --text:#e8e8f0;--text2:#9090b0;--text3:#5a5a80;
-  --accent:#7c5cfc;--accent2:#9b7dff;--accent-bg:rgba(124,92,252,0.12);
-  --green:#22c55e;--green-bg:rgba(34,197,94,0.1);
-  --radius:10px;--radius-sm:7px;
+  --bg:#0b0b16;--bg2:#111122;--bg3:#181830;--bg4:#1e1e3a;
+  --border:#2a2a50;--border2:#3a3a70;
+  --accent:#6c47ff;--accent2:#8b6dff;--accent-bg:rgba(108,71,255,0.13);--accent-border:rgba(108,71,255,0.5);
+  --green:#22c55e;--green-bg:rgba(34,197,94,0.10);--green-border:rgba(34,197,94,0.35);
+  --text:#ddddf5;--text2:#8080a8;--text3:#44446a;
+  --r:10px;--rs:7px;
 }
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0}
-.page{max-width:1100px;margin:0 auto;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
 
-/* NAV */
-nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:0;height:56px;position:sticky;top:0;z-index:100}
-.nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;color:#fff;text-decoration:none;margin-right:32px}
-.nav-logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
-.nav-link{padding:0 16px;height:56px;display:flex;align-items:center;font-size:14px;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;transition:.2s}
-.nav-link:hover{color:var(--text)}
-.nav-link.active{color:var(--accent2);border-bottom-color:var(--accent)}
-.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
-.nav-avatar{width:32px;height:32px;border-radius:50%;background:var(--accent-bg);border:1.5px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--accent2)}
-.nav-badge{font-size:10px;background:var(--accent);color:#fff;padding:2px 7px;border-radius:20px;font-weight:600}
+/* SIDEBAR */
+.sidebar{width:170px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:20px 12px;min-height:100vh}
+.logo{display:flex;align-items:center;gap:9px;margin-bottom:28px}
+.logo-ball{width:34px;height:34px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px}
+.logo-text{font-size:14px;font-weight:700;color:#fff}
+.sb-section{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.8px;text-transform:uppercase;margin:0 0 6px 6px}
+.sb-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;font-size:13px;color:var(--text2);cursor:pointer;margin-bottom:2px;transition:.15s}
+.sb-item:hover{background:var(--bg3);color:var(--text)}
+.sb-item.active{background:var(--accent-bg);color:var(--accent2)}
+.sb-item svg{width:17px;height:17px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8}
+.sb-sub{margin-left:26px;margin-bottom:6px}
+.sb-sub a{display:block;font-size:12px;color:var(--text2);padding:5px 8px;border-radius:6px;cursor:pointer;transition:.15s}
+.sb-sub a:hover{color:var(--text)}
+.sb-sub a.active{color:var(--accent2);background:var(--accent-bg)}
+.sb-chevron{margin-left:auto;font-size:11px;color:var(--text3)}
+.sb-footer{margin-top:auto;background:var(--bg3);border-radius:10px;padding:14px;text-align:center}
+.sb-footer .sf-icon{font-size:26px;margin-bottom:6px}
+.sb-footer .sf-t{font-size:11px;font-weight:700;color:#fff;margin-bottom:3px}
+.sb-footer .sf-s{font-size:10px;color:var(--text2);line-height:1.4}
 
-/* PAGE HEADER */
-.page-top{padding:24px 24px 0;display:flex;align-items:center;gap:12px}
-.back-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:14px;transition:.2s;flex-shrink:0}
-.back-btn:hover{border-color:var(--border2);color:var(--text)}
-.page-heading h1{font-size:22px;font-weight:700;color:#fff;line-height:1.2}
-.page-heading p{font-size:13px;color:var(--text2);margin-top:2px}
+/* MAIN */
+.main{flex:1;min-width:0;padding:24px 28px 40px}
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px}
+.page-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
+.page-sub{font-size:13px;color:var(--text2)}
+.back-btn{display:inline-flex;align-items:center;gap:7px;background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:9px 16px;font-size:13px;color:var(--text2);cursor:pointer;transition:.15s;white-space:nowrap}
+.back-btn:hover{border-color:var(--accent2);color:var(--text)}
 
-.breadcrumb-bar{padding:12px 24px 0;display:flex;align-items:center;gap:6px}
-.bc-btn{font-size:12px;color:var(--text2);background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:4px 12px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.2s}
-.bc-btn:hover{border-color:var(--border2);color:var(--text)}
+/* SECTION BOX */
+.sec-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;margin-bottom:16px;overflow:hidden}
+.sec-head{display:flex;align-items:center;gap:12px;padding:18px 22px 0}
+.sec-icon{width:32px;height:32px;background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.sec-name{font-size:13px;font-weight:700;color:#fff;letter-spacing:.2px}
+.sec-body{padding:18px 22px 22px}
 
-/* MAIN LAYOUT */
-.main{padding:24px;display:grid;grid-template-columns:1fr;gap:16px}
-
-/* SECTION CARD */
-.section-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-.section-header{padding:20px 24px 0;display:flex;align-items:flex-start;gap:16px}
-.sec-num{width:36px;height:36px;border-radius:50%;background:var(--accent-bg);border:1.5px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--accent2);flex-shrink:0}
-.sec-label h2{font-size:15px;font-weight:600;color:#fff;margin-bottom:2px}
-.sec-label p{font-size:12px;color:var(--text2)}
-.section-body{padding:20px 24px 24px}
-
-/* FORM ELEMENTS */
-.form-row{margin-bottom:18px}
-.form-row:last-child{margin-bottom:0}
-.form-grid{display:grid;gap:14px}
-.g2{grid-template-columns:1fr 1fr}
-.g3{grid-template-columns:1fr 1fr 1fr}
-@media(max-width:680px){.g2,.g3{grid-template-columns:1fr}}
-
-label.field-label{display:block;font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px}
-label.field-label .req{color:#ef4444;margin-left:2px}
-
-input[type=text],input[type=number],input[type=url],input[type=datetime-local],select,textarea{
-  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);
-  padding:10px 14px;font-size:14px;color:var(--text);outline:none;transition:.2s;
-  font-family:inherit;appearance:none;-webkit-appearance:none
+/* FORM */
+label.lbl{display:block;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px}
+.req{color:#ef4444;margin-left:2px}
+input[type=text],input[type=number],input[type=url],input[type=datetime-local],select{
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);
+  padding:10px 13px;font-size:13px;color:var(--text);outline:none;transition:.18s;font-family:inherit;appearance:none;-webkit-appearance:none
 }
-input:focus,select:focus,textarea:focus{border-color:var(--accent);background:var(--bg4);box-shadow:0 0 0 3px rgba(124,92,252,0.12)}
-input::placeholder,textarea::placeholder{color:var(--text3)}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239090b0' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
-select option{background:#1a1a2a;color:var(--text)}
-textarea{resize:vertical;min-height:90px;line-height:1.5}
+input:focus,select:focus{border-color:var(--accent);background:var(--bg4);box-shadow:0 0 0 3px rgba(108,71,255,0.12)}
+input::placeholder{color:var(--text3)}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%238080a8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;padding-right:32px}
+select option{background:#1e1e3a}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.row{margin-bottom:16px}
+.row:last-child{margin-bottom:0}
+.divider{height:1px;background:var(--border);margin:16px 0}
 
-/* RADIO CARDS */
-.radio-cards{display:grid;gap:10px}
-.radio-cards.cols3{grid-template-columns:repeat(3,1fr)}
-.radio-cards.cols2{grid-template-columns:1fr 1fr}
-@media(max-width:580px){.radio-cards.cols3,.radio-cards.cols2{grid-template-columns:1fr}}
+/* URL INPUT */
+.url-wrap{display:flex;gap:8px}
+.url-wrap input{flex:1}
+.upload-btn{background:var(--accent);border:none;border-radius:var(--rs);padding:10px 14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0}
+.upload-btn:hover{background:var(--accent2)}
+.upload-btn svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
 
-.radio-card{border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:.2s;background:var(--bg3);display:flex;align-items:flex-start;gap:12px;position:relative}
-.radio-card:hover{border-color:var(--border2)}
-.radio-card.selected{border-color:var(--accent);background:var(--accent-bg)}
-.radio-card input{display:none}
-.radio-dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--border2);flex-shrink:0;margin-top:1px;transition:.2s;display:flex;align-items:center;justify-content:center}
-.radio-card.selected .radio-dot{border-color:var(--accent);background:var(--accent)}
-.radio-dot::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;opacity:0;transition:.2s}
-.radio-card.selected .radio-dot::after{opacity:1}
-.rc-body .rc-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
-.rc-body .rc-sub{font-size:12px;color:var(--text2)}
-.rc-body .rc-title.active-text{color:var(--accent2)}
+/* CHOICE CARDS */
+.choice-row{display:flex;gap:10px;flex-wrap:wrap}
+.cc{flex:1;min-width:110px;border:1.5px solid var(--border);border-radius:10px;padding:18px 10px 14px;cursor:pointer;transition:.18s;background:var(--bg3);text-align:center}
+.cc:hover{border-color:var(--border2)}
+.cc.sel{border-color:var(--accent);background:var(--accent-bg)}
+.cc input{display:none}
+.cc .ci{font-size:26px;margin-bottom:7px;color:var(--text2)}
+.cc.sel .ci{color:var(--accent2)}
+.cc .ct{font-size:12px;font-weight:600;color:var(--text);line-height:1.3}
+.cc.sel .ct{color:var(--accent2)}
+.cc .cd{width:14px;height:14px;border-radius:50%;border:2px solid var(--border2);margin:9px auto 0;transition:.18s}
+.cc.sel .cd{border-color:var(--accent);background:var(--accent)}
 
-/* TOGGLE */
-.toggle-row{display:flex;align-items:center;gap:12px}
-.toggle{position:relative;width:44px;height:24px;flex-shrink:0}
-.toggle input{opacity:0;width:0;height:0;position:absolute}
-.toggle-track{position:absolute;inset:0;background:var(--bg4);border:1px solid var(--border2);border-radius:100px;cursor:pointer;transition:.2s}
-.toggle-track::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--text3);transition:.2s}
-.toggle input:checked + .toggle-track{background:var(--accent);border-color:var(--accent)}
-.toggle input:checked + .toggle-track::after{left:23px;background:#fff}
-.toggle-label{font-size:14px;color:var(--text)}
-.toggle-hint{font-size:12px;color:var(--text2)}
+/* SIZE CARDS */
+.size-row{display:flex;gap:10px;flex-wrap:wrap}
+.sc{flex:1;min-width:90px;border:1.5px solid var(--border);border-radius:10px;padding:14px 8px 10px;cursor:pointer;transition:.18s;background:var(--bg3);text-align:center}
+.sc:hover{border-color:var(--border2)}
+.sc.sel{border-color:var(--accent);background:var(--accent-bg)}
+.sc input{display:none}
+.sc .si{font-size:20px;color:var(--text2);margin-bottom:6px}
+.sc.sel .si{color:var(--accent2)}
+.sc .sn{font-size:13px;font-weight:700;color:var(--text)}
+.sc.sel .sn{color:var(--accent2)}
+.sc .sl{font-size:10px;color:var(--text2);margin-top:2px}
+.sc .sd{width:13px;height:13px;border-radius:50%;border:2px solid var(--border2);margin:7px auto 0;transition:.18s}
+.sc.sel .sd{border-color:var(--accent);background:var(--accent)}
 
-/* NUMBER INPUT ROW */
-.num-field{position:relative}
-.num-field input{padding-right:50px}
-.num-unit{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text2);font-weight:600;pointer-events:none}
+/* SUB INFO */
+.sub-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:12px 16px}
+.sub-item{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)}
+.sub-item:last-child{border-bottom:none;padding-bottom:0}
+.sub-lbl{font-size:12px;color:var(--text2)}
+.sub-val{font-size:12px;font-weight:700;color:var(--green)}
 
-/* PRIZE DISTRIBUTION */
-.prize-dist-row{display:flex;align-items:center;gap:12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px}
-.prize-place{display:flex;align-items:center;gap:10px;min-width:90px}
-.prize-medal{font-size:20px}
-.prize-name{font-size:13px;font-weight:600;color:var(--text)}
-.prize-sub{font-size:11px;color:var(--text2)}
-.prize-inputs{display:flex;gap:8px;flex:1;align-items:center}
-.prize-inputs input{flex:1;min-width:80px}
-.prize-pct-wrap{display:flex;align-items:center;gap:4px}
-.prize-pct-wrap input{width:64px;text-align:center}
-.pct-sign{font-size:13px;color:var(--text2);font-weight:600}
-.add-prize-btn{border:1px dashed var(--border2);border-radius:var(--radius-sm);padding:10px;text-align:center;font-size:13px;color:var(--text2);cursor:pointer;transition:.2s;background:transparent;width:100%;margin-top:8px}
-.add-prize-btn:hover{border-color:var(--accent);color:var(--accent)}
+/* TEAM */
+.tf-wrap{display:flex;gap:6px;margin-bottom:12px}
+.tf-btn{padding:6px 16px;border-radius:7px;font-size:12px;font-weight:600;border:1.5px solid var(--border);background:var(--bg3);color:var(--text2);cursor:pointer;transition:.15s;font-family:inherit}
+.tf-btn:hover{border-color:var(--border2);color:var(--text)}
+.tf-btn.sel{border-color:var(--accent);background:var(--accent-bg);color:var(--accent2)}
+.team-cbs{display:flex;gap:8px;flex-wrap:wrap}
+.tcb{display:flex;align-items:center;gap:7px;background:var(--bg3);border:1.5px solid var(--accent-border);border-radius:8px;padding:7px 14px;cursor:pointer;transition:.15s;user-select:none}
+.tcb:hover{border-color:var(--accent)}
+.tcb .cb-box{width:15px;height:15px;border-radius:3px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700}
+.tcb span{font-size:12px;font-weight:600;color:var(--text)}
+.tcb.off{border-color:var(--border);opacity:.55}
 
-/* SUBSTITUTES TOGGLE ROW */
-.sub-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:end}
-@media(max-width:500px){.sub-row{grid-template-columns:1fr}}
+/* SLOTS */
+.slot-row{display:flex;gap:8px;flex-wrap:wrap}
+.sb{padding:9px 18px;border-radius:8px;font-size:14px;font-weight:700;border:1.5px solid var(--border);background:var(--bg3);color:var(--text2);cursor:pointer;transition:.15s;font-family:inherit}
+.sb:hover{border-color:var(--border2);color:var(--text)}
+.sb.sel{border-color:var(--accent);background:var(--accent-bg);color:var(--accent2)}
 
-/* SECTION DIVIDER */
-.sec-div{height:1px;background:var(--border);margin:0 24px}
+/* NB BOX */
+.nb{background:var(--green-bg);border:1px solid var(--green-border);border-radius:var(--rs);padding:10px 14px;margin-top:10px;display:flex;gap:9px;align-items:flex-start}
+.nb .nb-icon{font-size:14px;color:var(--green);flex-shrink:0;margin-top:1px}
+.nb p{font-size:11px;color:#7cbf92;line-height:1.6}
+
+/* GROUPS */
+.grp-row{display:flex;gap:8px}
+.gb{padding:9px 22px;border-radius:8px;font-size:15px;font-weight:700;border:1.5px solid var(--border);background:var(--bg3);color:var(--text2);cursor:pointer;transition:.15s;font-family:inherit}
+.gb:hover{border-color:var(--border2);color:var(--text)}
+.gb.sel{border-color:var(--accent);background:var(--accent-bg);color:var(--accent2)}
+
+/* HALF GRID */
+.half{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.half,.g2,.g3{grid-template-columns:1fr}.sidebar{display:none}}
+
+/* RADIO */
+.radio-col{display:flex;flex-direction:column;gap:9px}
+.radio-row{display:flex;gap:14px;flex-wrap:wrap}
+.ro{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--text)}
+.ro input{display:none}
+.rdot{width:15px;height:15px;border-radius:50%;border:2px solid var(--border2);flex-shrink:0;transition:.18s;display:flex;align-items:center;justify-content:center}
+.ro.sel .rdot{border-color:var(--accent);background:var(--accent)}
+.ro.sel .rdot::after{content:'';width:5px;height:5px;border-radius:50%;background:#fff;display:block}
+.ro.sel span{color:var(--accent2);font-weight:600}
+
+/* BDT PREFIX */
+.bdt-wrap{display:flex;gap:6px;align-items:center}
+.bdt-prefix{font-size:12px;font-weight:700;color:var(--text2);background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:9px 11px;flex-shrink:0}
+
+/* PRIZE DIST */
+.prize-rows{display:flex;flex-direction:column;gap:8px}
+.pr{display:flex;align-items:center;gap:10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:10px 14px}
+.pr-medal{font-size:18px;flex-shrink:0}
+.pr-lbl{font-size:13px;font-weight:600;min-width:72px}
+.pr-pct{display:flex;align-items:center;gap:5px}
+.pr-pct input{width:56px;background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:7px 8px;font-size:13px;color:var(--text);text-align:center;font-family:inherit;outline:none;transition:.15s}
+.pr-pct input:focus{border-color:var(--accent)}
+.pr-pct .ps{font-size:13px;color:var(--text2);font-weight:600}
+.prize-total{text-align:right;font-size:13px;font-weight:700;color:var(--green);margin-top:7px}
 
 /* BOTTOM BAR */
-.bottom-bar{position:sticky;bottom:0;background:var(--bg2);border-top:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:50}
-.btn-draft{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 18px;font-size:14px;font-weight:600;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:7px;transition:.2s;font-family:inherit}
-.btn-draft:hover{border-color:var(--accent);color:var(--accent)}
-.btn-publish{background:var(--accent);border:none;border-radius:8px;padding:11px 22px;font-size:14px;font-weight:600;color:#fff;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.2s;font-family:inherit}
+.bottom-bar{display:flex;gap:10px;padding:18px 22px;border-top:1px solid var(--border);flex-wrap:wrap}
+.btn-draft,.btn-preview{flex:1;padding:12px;border:1.5px solid var(--border2);background:var(--bg3);border-radius:10px;font-size:14px;font-weight:600;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s;font-family:inherit}
+.btn-draft:hover,.btn-preview:hover{border-color:var(--accent2);color:var(--accent2)}
+.btn-draft svg,.btn-preview svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+.btn-publish{flex:2;padding:12px;border:none;background:var(--accent);border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s;font-family:inherit}
 .btn-publish:hover{background:var(--accent2)}
-.btn-publish svg{width:16px;height:16px}
+.btn-publish svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:1.8}
 
-/* SUCCESS TOAST */
-.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#22c55e;color:#fff;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;z-index:999;opacity:0;pointer-events:none;transition:.3s}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:#fff;padding:10px 24px;border-radius:9px;font-size:13px;font-weight:600;z-index:999;opacity:0;pointer-events:none;transition:.3s;white-space:nowrap}
 .toast.show{opacity:1}
-
-/* SECTION DIVIDER LINE */
-.form-divider{height:1px;background:var(--border);margin:18px 0}
 </style>
+</head>
+<body>
 
-<h2 class="sr-only">eKickHub — Create New Competition Form</h2>
-
-<nav>
-  <div class="nav-logo">
-    <div class="nav-logo-icon">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14M12 2v20M2 12h20"/></svg>
-    </div>
-    eKickHub
+<div class="sidebar">
+  <div class="logo">
+    <div class="logo-ball">⚽</div>
+    <span class="logo-text">eKickHub</span>
   </div>
-  <div class="nav-link">Dashboard</div>
-  <div class="nav-link active">Competitions</div>
-  <div class="nav-link">Teams</div>
-  <div class="nav-link">Players</div>
-  <div class="nav-link">Transactions</div>
-  <div class="nav-right">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9090b0" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9090b0" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-    <div class="nav-avatar">OR</div>
-    <div class="nav-badge">Pro</div>
+  <div class="sb-section">Main</div>
+  <div class="sb-item">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    Dashboard
   </div>
-</nav>
-
-<div class="page">
-  <div class="page-top">
-    <div class="back-btn" onclick="">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
-    </div>
-    <div class="page-heading">
-      <h1>Create New Competition</h1>
-      <p>Set up your tournament details and rules</p>
-    </div>
+  <div class="sb-item active">
+    <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+    Competitions <span class="sb-chevron">▾</span>
   </div>
-  <div class="breadcrumb-bar">
-    <div class="bc-btn">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
-      Back to Competitions
+  <div class="sb-sub">
+    <a>All Competitions</a>
+    <a class="active">Create Competition</a>
+    <a>Match Center</a>
+    <a>Participants</a>
+  </div>
+  <div class="sb-item">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Players
+  </div>
+  <div class="sb-item">
+    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Clubs
+  </div>
+  <div class="sb-item">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+    Referees
+  </div>
+  <div class="sb-item">
+    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Admins
+  </div>
+  <div class="sb-item">
+    <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    Reports
+  </div>
+  <div class="sb-item">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+    Settings
+  </div>
+  <div class="sb-footer">
+    <div class="sf-icon">🏆</div>
+    <div class="sf-t">Build. Compete. Win.</div>
+    <div class="sf-s">eKickHub is the home of true gamers.</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Create a Competition</div>
+      <div class="page-sub">Fill all the details carefully to create your competition</div>
     </div>
+    <button class="back-btn">
+      ‹ Back to Competitions
+    </button>
   </div>
 
-  <div class="main">
+  <!-- 1. BASIC INFORMATION -->
+  <div class="sec-box">
+    <div class="sec-head">
+      <div class="sec-icon">📋</div>
+      <div class="sec-name">1. Basic Information</div>
+    </div>
+    <div class="sec-body">
 
-    <!-- 01 BASIC INFORMATION -->
-    <div class="section-card">
-      <div class="section-header">
-        <div class="sec-num">01</div>
-        <div class="sec-label">
-          <h2>Basic Information</h2>
-          <p>Tell us about your competition</p>
+      <div class="row g2">
+        <div>
+          <label class="lbl">Competition Name <span class="req">*</span></label>
+          <input type="text" id="cname" placeholder="Enter competition name">
         </div>
-      </div>
-      <div class="section-body">
-        <div class="form-row">
-          <div class="form-grid g2">
-            <div>
-              <label class="field-label">Competition Name <span class="req">*</span></label>
-              <input type="text" id="comp-name" placeholder="Enter competition name">
-            </div>
-            <div>
-              <label class="field-label">Game / Category <span class="req">*</span></label>
-              <select id="comp-game">
-                <option value="">Select game or category</option>
-                <option>eFootball</option>
-                <option>FIFA</option>
-                <option>PES</option>
-                <option>Other</option>
-              </select>
-            </div>
+        <div>
+          <label class="lbl">Competition Banner / Image URL <span class="req">*</span></label>
+          <div class="url-wrap">
+            <input type="url" placeholder="Paste image URL or upload banner">
+            <button class="upload-btn" title="Upload">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </button>
           </div>
         </div>
+      </div>
 
-        <div class="form-row">
-          <label class="field-label">Competition Type <span class="req">*</span></label>
-          <div class="radio-cards cols3" id="type-cards">
-            <label class="radio-card selected" onclick="selectCard('type',this)">
-              <input type="radio" name="comp-type" value="pvp" checked>
-              <div class="radio-dot"></div>
-              <div class="rc-body">
-                <div class="rc-title active-text">Player vs Player</div>
-                <div class="rc-sub">Individual players</div>
-              </div>
+      <div class="divider"></div>
+
+      <div class="row half">
+        <div>
+          <label class="lbl">Competition Type <span class="req">*</span></label>
+          <div class="choice-row" id="type-wrap">
+            <label class="cc sel" onclick="selCards('type-wrap',this)">
+              <input type="radio" name="ctype" value="pvp" checked>
+              <div class="ci">👤</div>
+              <div class="ct">Player vs Player</div>
+              <div class="cd"></div>
             </label>
-            <label class="radio-card" onclick="selectCard('type',this)">
-              <input type="radio" name="comp-type" value="cvc">
-              <div class="radio-dot"></div>
-              <div class="rc-body">
-                <div class="rc-title">Club vs Club</div>
-                <div class="rc-sub">Teams or clubs</div>
-              </div>
-            </label>
-            <label class="radio-card" onclick="selectCard('type',this)">
-              <input type="radio" name="comp-type" value="both">
-              <div class="radio-dot"></div>
-              <div class="rc-body">
-                <div class="rc-title">Both</div>
-                <div class="rc-sub">Both players & clubs</div>
-              </div>
+            <label class="cc" onclick="selCards('type-wrap',this)">
+              <input type="radio" name="ctype" value="cvc">
+              <div class="ci">🏟️</div>
+              <div class="ct">Club vs Club</div>
+              <div class="cd"></div>
             </label>
           </div>
         </div>
+        <div>
+          <label class="lbl">Competition Format <span class="req">*</span></label>
+          <div class="choice-row" id="fmt-wrap">
+            <label class="cc sel" onclick="selCards('fmt-wrap',this)">
+              <input type="radio" name="cfmt" value="rr" checked>
+              <div class="ci">🔄</div>
+              <div class="ct">Round Robin + Knockout Rounds</div>
+              <div class="cd"></div>
+            </label>
+            <label class="cc" onclick="selCards('fmt-wrap',this)">
+              <input type="radio" name="cfmt" value="ko">
+              <div class="ci">⚔️</div>
+              <div class="ct">Knockout Rounds</div>
+              <div class="cd"></div>
+            </label>
+            <label class="cc" onclick="selCards('fmt-wrap',this)">
+              <input type="radio" name="cfmt" value="gl">
+              <div class="ci">📊</div>
+              <div class="ct">Group Wise Round Robin (League)</div>
+              <div class="cd"></div>
+            </label>
+          </div>
+        </div>
+      </div>
 
-        <div class="form-row">
-          <div class="form-grid g3">
-            <div>
-              <label class="field-label">Format <span class="req">*</span></label>
-              <select>
-                <option>Knockout</option>
-                <option>Round Robin + KO</option>
-                <option>Group League</option>
-                <option>Double Elimination</option>
-              </select>
+      <div class="divider"></div>
+
+      <div class="row half">
+        <div>
+          <label class="lbl">Team Size <span class="req">*</span></label>
+          <div class="size-row" id="size-wrap">
+            <label class="sc" onclick="selCards('size-wrap',this)">
+              <input type="radio" name="tsize" value="1v1">
+              <div class="si">👤</div>
+              <div class="sn">1 vs 1</div>
+              <div class="sl">(Player)</div>
+              <div class="sd"></div>
+            </label>
+            <label class="sc" onclick="selCards('size-wrap',this)">
+              <input type="radio" name="tsize" value="2v2">
+              <div class="si">👥</div>
+              <div class="sn">2 vs 2</div>
+              <div class="sl">(Player Co-Op)</div>
+              <div class="sd"></div>
+            </label>
+            <label class="sc sel" onclick="selCards('size-wrap',this)">
+              <input type="radio" name="tsize" value="11v11" checked>
+              <div class="si">🏆</div>
+              <div class="sn">11 vs 11</div>
+              <div class="sl">(Club)</div>
+              <div class="sd"></div>
+            </label>
+            <label class="sc" onclick="selCards('size-wrap',this)">
+              <input type="radio" name="tsize" value="6v6">
+              <div class="si">🛡️</div>
+              <div class="sn">6 vs 6</div>
+              <div class="sl">(Club)</div>
+              <div class="sd"></div>
+            </label>
+          </div>
+        </div>
+        <div>
+          <label class="lbl">Team Substitute / Swap <span class="req">*</span></label>
+          <div class="sub-box">
+            <div class="sub-item">
+              <span class="sub-lbl">2 vs 2 (Player Co-Op)</span>
+              <span class="sub-val">Max 1 <span style="color:var(--text2);font-weight:400">(Total Player 2+1)</span></span>
             </div>
-            <div>
-              <label class="field-label">Team Size <span class="req">*</span></label>
-              <select>
-                <option>1 v 1</option>
-                <option>2 v 2</option>
-                <option selected>5 v 5</option>
-                <option>6 v 6</option>
-                <option>11 v 11</option>
-              </select>
+            <div class="sub-item">
+              <span class="sub-lbl">11 vs 11 (Club)</span>
+              <span class="sub-val">Max 5 <span style="color:var(--text2);font-weight:400">(Total Player 11+5)</span></span>
             </div>
-            <div>
-              <label class="field-label">Visibility <span class="req">*</span></label>
-              <select>
-                <option>Public</option>
-                <option>Private</option>
-                <option>Invite Only</option>
-              </select>
+            <div class="sub-item">
+              <span class="sub-lbl">6 vs 6 (Club)</span>
+              <span class="sub-val">Max 3 <span style="color:var(--text2);font-weight:400">(Total Player 6+3)</span></span>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="form-row">
-          <label class="field-label">Short Description</label>
-          <textarea id="comp-desc" placeholder="Briefly describe your competition..." maxlength="200" oninput="updateCharCount(this,'desc-count',200)"></textarea>
-          <div style="text-align:right;font-size:11px;color:var(--text3);margin-top:4px"><span id="desc-count">0</span>/200</div>
+      <div class="divider"></div>
+
+      <div class="row half">
+        <div>
+          <label class="lbl">Team For Club (Can Select)</label>
+          <div class="tf-wrap" id="tf-wrap">
+            <button class="tf-btn sel" onclick="selTf(this)">On</button>
+            <button class="tf-btn" onclick="selTf(this)">Both</button>
+            <button class="tf-btn" onclick="selTf(this)">All</button>
+          </div>
+          <div class="team-cbs">
+            <div class="tcb" onclick="toggleTeam(this)"><div class="cb-box">✓</div><span>Team Alpha</span></div>
+            <div class="tcb" onclick="toggleTeam(this)"><div class="cb-box">✓</div><span>Team Bravo</span></div>
+            <div class="tcb" onclick="toggleTeam(this)"><div class="cb-box">✓</div><span>Team Neo</span></div>
+          </div>
+        </div>
+        <div>
+          <label class="lbl">Max Player / Club (Can Register) <span class="req">*</span></label>
+          <div class="slot-row" id="slot-wrap">
+            <button class="sb" onclick="selSlot(this)">32</button>
+            <button class="sb sel" onclick="selSlot(this)">64</button>
+            <button class="sb" onclick="selSlot(this)">128</button>
+            <button class="sb" onclick="selSlot(this)">256</button>
+            <button class="sb" onclick="selSlot(this)">512</button>
+          </div>
+          <div class="nb">
+            <span class="nb-icon">ℹ</span>
+            <p>If slots are not full, system will add Auto BOT or adjust the slots. Extra players will go to the waiting list.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="row">
+        <label class="lbl">Max Group Divided By <span class="req">*</span></label>
+        <div class="grp-row" id="grp-wrap">
+          <button class="gb" onclick="selGroup(this)">2</button>
+          <button class="gb" onclick="selGroup(this)">4</button>
+          <button class="gb sel" onclick="selGroup(this)">8</button>
+          <button class="gb" onclick="selGroup(this)">16</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2. REGISTRATION & SCHEDULE -->
+  <div class="sec-box">
+    <div class="sec-head">
+      <div class="sec-icon">📅</div>
+      <div class="sec-name">2. Registration &amp; Schedule</div>
+    </div>
+    <div class="sec-body">
+      <div class="row g3">
+        <div>
+          <label class="lbl">Registration Start (Date &amp; Time) <span class="req">*</span></label>
+          <input type="datetime-local" id="reg-start">
+        </div>
+        <div>
+          <label class="lbl">Registration End (Date &amp; Time) <span class="req">*</span></label>
+          <input type="datetime-local" id="reg-end">
+        </div>
+        <div>
+          <label class="lbl">Competition Start (Date &amp; Time) <span class="req">*</span></label>
+          <input type="datetime-local" id="comp-start">
+        </div>
+      </div>
+      <div class="row g2">
+        <div>
+          <label class="lbl">Estimated Duration (Days) <span class="req">*</span></label>
+          <input type="number" placeholder="Enter total days (e.g. 7)" min="1">
+        </div>
+        <div>
+          <label class="lbl">Time Zone <span class="req">*</span></label>
+          <select>
+            <option selected>(GMT+6) Dhaka, Bangladesh</option>
+            <option>(UTC) Coordinated Universal Time</option>
+            <option>(GMT+5:30) India Standard Time</option>
+            <option>(GMT+8) China Standard Time</option>
+            <option>(GMT-5) Eastern Standard Time</option>
+            <option>(GMT-8) Pacific Standard Time</option>
+            <option>(GMT+1) Central European Time</option>
+          </select>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- 02 PARTICIPANTS & REGISTRATION -->
-    <div class="section-card">
-      <div class="section-header">
-        <div class="sec-num">02</div>
-        <div class="sec-label">
-          <h2>Participants &amp; Registration</h2>
-          <p>Manage who can join</p>
-        </div>
-      </div>
-      <div class="section-body">
-        <div class="form-row">
-          <label class="field-label">Who can join?</label>
-          <div style="display:flex;gap:8px;margin-bottom:18px">
-            <button class="btn-pill active" onclick="selectPill(this)" style="background:var(--accent);border:1.5px solid var(--accent);border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;transition:.2s;font-family:inherit">Anyone</button>
-            <button class="btn-pill" onclick="selectPill(this)" style="background:var(--bg3);border:1.5px solid var(--border);border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;transition:.2s;font-family:inherit">Invite Only</button>
+  <!-- 3. ENTRY FEE & PRIZE -->
+  <div class="sec-box">
+    <div class="sec-head">
+      <div class="sec-icon">💰</div>
+      <div class="sec-name">3. Entry Fee &amp; Prize</div>
+    </div>
+    <div class="sec-body">
+      <div class="row g3">
+
+        <div>
+          <label class="lbl">Entry Fee</label>
+          <div class="radio-col" id="fee-radio" style="margin-bottom:14px">
+            <label class="ro sel" onclick="selRadio('fee-radio',this)">
+              <input type="radio" name="fee" value="enable" checked>
+              <div class="rdot"></div>
+              <span>Enable (BDT)</span>
+            </label>
+            <label class="ro" onclick="selRadio('fee-radio',this)">
+              <input type="radio" name="fee" value="disable">
+              <div class="rdot"></div>
+              <span>Disable</span>
+            </label>
+          </div>
+          <label class="lbl">Entry Fee Amount (BDT) <span class="req">*</span></label>
+          <div class="bdt-wrap">
+            <span class="bdt-prefix">BDT</span>
+            <input type="number" placeholder="Enter entry fee amount" min="0">
           </div>
         </div>
 
-        <div class="form-row">
-          <div class="form-grid g3">
-            <div>
-              <label class="field-label">Registration Start</label>
-              <input type="datetime-local" id="reg-start">
-            </div>
-            <div>
-              <label class="field-label">Registration End</label>
-              <input type="datetime-local" id="reg-end">
-            </div>
-            <div>
-              <label class="field-label">Max Teams / Players</label>
-              <input type="number" value="64" min="2">
-            </div>
+        <div>
+          <label class="lbl">Prize Pool Type</label>
+          <div class="radio-col" id="prize-type-radio" style="margin-bottom:14px">
+            <label class="ro sel" onclick="selRadio('prize-type-radio',this)">
+              <input type="radio" name="ptype" value="bdt" checked>
+              <div class="rdot"></div>
+              <span>Total Prize (BDT)</span>
+            </label>
+            <label class="ro" onclick="selRadio('prize-type-radio',this)">
+              <input type="radio" name="ptype" value="coin">
+              <div class="rdot"></div>
+              <span>Total Prize (eKickHub Coin)</span>
+            </label>
+          </div>
+          <label class="lbl">Total Prize (BDT) <span class="req">*</span></label>
+          <div class="bdt-wrap">
+            <span class="bdt-prefix">BDT</span>
+            <input type="number" id="total-prize" placeholder="Enter total prize amount" min="0" oninput="syncPrize()">
           </div>
         </div>
 
-        <div class="form-row">
-          <div class="form-grid g3">
-            <div>
-              <label class="field-label">Min Players per Team</label>
-              <input type="number" value="5" min="1">
+        <div>
+          <label class="lbl">Prize Distribution</label>
+          <div class="prize-rows">
+            <div class="pr">
+              <span class="pr-medal">🥇</span>
+              <span class="pr-lbl" style="color:#fbbf24">1st Prize</span>
+              <div class="pr-pct">
+                <input type="number" id="pct1" value="50" min="0" max="100" step="1" oninput="syncPrize()">
+                <span class="ps">%</span>
+              </div>
             </div>
-            <div>
-              <label class="field-label">Max Players per Team</label>
-              <input type="number" value="5" min="1">
+            <div class="pr">
+              <span class="pr-medal">🥈</span>
+              <span class="pr-lbl" style="color:#d1d5db">2nd Prize</span>
+              <div class="pr-pct">
+                <input type="number" id="pct2" value="30" min="0" max="100" step="1" oninput="syncPrize()">
+                <span class="ps">%</span>
+              </div>
             </div>
-            <div></div>
-          </div>
-          <div style="font-size:12px;color:var(--text2);margin-top:6px">
-            <div style="margin-bottom:3px">Minimum players required in a team</div>
-          </div>
-        </div>
-
-        <div class="form-divider"></div>
-
-        <div class="sub-row form-row">
-          <div>
-            <label class="field-label">Substitute Players</label>
-            <div class="toggle-row">
-              <label class="toggle">
-                <input type="checkbox" id="sub-toggle" onchange="toggleSub()">
-                <div class="toggle-track"></div>
-              </label>
-              <div>
-                <div class="toggle-label">Allow substitutes</div>
-                <div class="toggle-hint">Teams can register substitute players</div>
+            <div class="pr">
+              <span class="pr-medal">🥉</span>
+              <span class="pr-lbl" style="color:#cd7f32">3rd Prize</span>
+              <div class="pr-pct">
+                <input type="number" id="pct3" value="20" min="0" max="100" step="1" oninput="syncPrize()">
+                <span class="ps">%</span>
               </div>
             </div>
           </div>
-          <div id="max-sub-field" style="opacity:.4;pointer-events:none;transition:.2s">
-            <label class="field-label">Max Substitutes</label>
-            <input type="number" value="2" min="0" max="10">
-            <div style="font-size:12px;color:var(--text2);margin-top:5px">Maximum substitute players per team</div>
+          <div class="prize-total" id="ptotal">Total: 100%</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. SPONSOR -->
+  <div class="sec-box">
+    <div class="sec-head">
+      <div class="sec-icon">🤝</div>
+      <div class="sec-name">4. Sponsor</div>
+    </div>
+    <div class="sec-body">
+      <div class="row g2">
+        <div>
+          <label class="lbl">Sponsor By (Name)</label>
+          <input type="text" placeholder="Enter sponsor name">
+        </div>
+        <div>
+          <label class="lbl">Sponsor Logo (Image URL)</label>
+          <div class="url-wrap">
+            <input type="url" placeholder="Paste image URL or upload logo">
+            <button class="upload-btn" title="Upload">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </button>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- 03 ENTRY FEE & PRIZE -->
-    <div class="section-card">
-      <div class="section-header">
-        <div class="sec-num">03</div>
-        <div class="sec-label">
-          <h2>Entry Fee &amp; Prize</h2>
-          <p>Set fees and rewards</p>
-        </div>
-      </div>
-      <div class="section-body">
-        <div class="form-grid g2" style="margin-bottom:18px">
-          <div>
-            <label class="field-label">Entry Fee</label>
-            <div class="toggle-row" style="margin-bottom:12px">
-              <label class="toggle">
-                <input type="checkbox" id="fee-toggle" onchange="toggleFee()" checked>
-                <div class="toggle-track"></div>
-              </label>
-              <span class="toggle-label">Enable entry fee</span>
-            </div>
-            <label class="field-label">Amount</label>
-            <div style="display:flex;gap:8px">
-              <select style="width:90px">
-                <option>BDT</option>
-                <option>USD</option>
-                <option>Coin</option>
-              </select>
-              <input type="number" value="100" min="0" style="flex:1">
-            </div>
-            <div style="font-size:12px;color:var(--text2);margin-top:5px">Entry fee per team</div>
-          </div>
-          <div>
-            <label class="field-label">Prize Pool</label>
-            <div class="toggle-row" style="margin-bottom:12px">
-              <label class="toggle">
-                <input type="checkbox" id="prize-toggle" onchange="togglePrize()" checked>
-                <div class="toggle-track"></div>
-              </label>
-              <span class="toggle-label">Enable prize pool</span>
-            </div>
-            <label class="field-label">Total Prize (BDT)</label>
-            <div style="display:flex;gap:8px">
-              <select style="width:90px">
-                <option>BDT</option>
-                <option>USD</option>
-                <option>Coin</option>
-              </select>
-              <input type="number" id="total-prize" value="10000" min="0" oninput="updatePrizeDist()">
-            </div>
-            <div style="font-size:12px;color:var(--text2);margin-top:5px">Total prize money for the competition</div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <label class="field-label">Prize Distribution</label>
-          <div id="prize-rows" style="display:flex;flex-direction:column;gap:8px">
-            <div class="prize-dist-row">
-              <div class="prize-place">
-                <span class="prize-medal">🥇</span>
-                <div><div class="prize-name">1st Place</div></div>
-              </div>
-              <div class="prize-inputs">
-                <select style="width:70px"><option>BDT</option><option>Coin</option></select>
-                <input type="number" class="prize-amt" id="pamt-1" value="6000" style="flex:1" oninput="syncPct(1)">
-                <div class="prize-pct-wrap">
-                  <input type="number" class="prize-pct" id="ppct-1" value="60" min="0" max="100" style="width:60px;text-align:center" oninput="syncAmt(1)">
-                  <span class="pct-sign">%</span>
-                </div>
-              </div>
-            </div>
-            <div class="prize-dist-row">
-              <div class="prize-place">
-                <span class="prize-medal">🥈</span>
-                <div><div class="prize-name">2nd Place</div></div>
-              </div>
-              <div class="prize-inputs">
-                <select style="width:70px"><option>BDT</option><option>Coin</option></select>
-                <input type="number" class="prize-amt" id="pamt-2" value="3000" style="flex:1" oninput="syncPct(2)">
-                <div class="prize-pct-wrap">
-                  <input type="number" class="prize-pct" id="ppct-2" value="30" min="0" max="100" style="width:60px;text-align:center" oninput="syncAmt(2)">
-                  <span class="pct-sign">%</span>
-                </div>
-              </div>
-            </div>
-            <div class="prize-dist-row">
-              <div class="prize-place">
-                <span class="prize-medal">🥉</span>
-                <div><div class="prize-name">3rd Place</div></div>
-              </div>
-              <div class="prize-inputs">
-                <select style="width:70px"><option>BDT</option><option>Coin</option></select>
-                <input type="number" class="prize-amt" id="pamt-3" value="1000" style="flex:1" oninput="syncPct(3)">
-                <div class="prize-pct-wrap">
-                  <input type="number" class="prize-pct" id="ppct-3" value="10" min="0" max="100" style="width:60px;text-align:center" oninput="syncAmt(3)">
-                  <span class="pct-sign">%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button class="add-prize-btn" onclick="addPrizeRank()">+ Add Prize Rank</button>
-        </div>
-      </div>
+  <!-- BOTTOM -->
+  <div class="sec-box">
+    <div class="bottom-bar">
+      <button class="btn-draft" onclick="act('draft')">
+        <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save as Draft
+      </button>
+      <button class="btn-preview" onclick="act('preview')">
+        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Preview Competition
+      </button>
+      <button class="btn-publish" onclick="act('publish')">
+        <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        Publish Competition
+      </button>
     </div>
+  </div>
 
-    <!-- 04 SCHEDULE -->
-    <div class="section-card">
-      <div class="section-header">
-        <div class="sec-num">04</div>
-        <div class="sec-label">
-          <h2>Schedule</h2>
-          <p>When will it happen?</p>
-        </div>
-      </div>
-      <div class="section-body">
-        <div class="form-grid g2 form-row">
-          <div>
-            <label class="field-label">Competition Start Date</label>
-            <input type="date" value="2025-06-05">
-          </div>
-          <div>
-            <label class="field-label">Start Time</label>
-            <input type="time" value="20:00">
-          </div>
-        </div>
-        <div class="form-grid g2 form-row">
-          <div>
-            <label class="field-label">Estimated Duration</label>
-            <select>
-              <option>1 Day</option>
-              <option>2 Days</option>
-              <option selected>3 Days</option>
-              <option>1 Week</option>
-              <option>2 Weeks</option>
-              <option>1 Month</option>
-            </select>
-          </div>
-          <div>
-            <label class="field-label">Timezone</label>
-            <select>
-              <option selected>(GMT+6) Dhaka, Bangladesh</option>
-              <option>(UTC) Coordinated Universal Time</option>
-              <option>(GMT+5:30) India Standard Time</option>
-              <option>(GMT+8) China Standard Time</option>
-              <option>(GMT-5) Eastern Standard Time</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 05 RULES & SETTINGS -->
-    <div class="section-card">
-      <div class="section-header">
-        <div class="sec-num">05</div>
-        <div class="sec-label">
-          <h2>Rules &amp; Settings</h2>
-          <p>Set rules and match settings</p>
-        </div>
-      </div>
-      <div class="section-body">
-        <div class="form-grid g3 form-row">
-          <div>
-            <label class="field-label">Game Mode / Map Pool</label>
-            <select>
-              <option>Classic</option>
-              <option>Career</option>
-              <option>Quick Match</option>
-            </select>
-            <div style="font-size:12px;color:var(--text2);margin-top:5px">Select game mode or maps</div>
-          </div>
-          <div>
-            <label class="field-label">Match Settings</label>
-            <select>
-              <option>Best of 1</option>
-              <option selected>Best of 3</option>
-              <option>Best of 5</option>
-            </select>
-            <div style="font-size:12px;color:var(--text2);margin-top:5px">Match format</div>
-          </div>
-          <div>
-            <label class="field-label">Custom Rules</label>
-            <div class="toggle-row" style="margin-top:4px">
-              <label class="toggle">
-                <input type="checkbox" id="rules-toggle">
-                <div class="toggle-track"></div>
-              </label>
-              <div>
-                <div class="toggle-label">Add custom rules</div>
-                <div class="toggle-hint">Add special rules for your competition</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <label class="field-label">Additional Rules</label>
-          <textarea placeholder="Enter any additional rules or instructions..." maxlength="500" oninput="updateCharCount(this,'rules-count',500)" style="min-height:110px"></textarea>
-          <div style="text-align:right;font-size:11px;color:var(--text3);margin-top:4px"><span id="rules-count">0</span>/500</div>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /main -->
-</div><!-- /page -->
-
-<div class="bottom-bar">
-  <button class="btn-draft" onclick="saveDraft()">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-    Save as Draft
-  </button>
-  <button class="btn-publish" onclick="publishComp()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    Create Competition
-  </button>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-function selectCard(group,el){
-  el.closest('.radio-cards').querySelectorAll('.radio-card').forEach(c=>{
-    c.classList.remove('selected');
-    c.querySelector('.rc-title').classList.remove('active-text');
-  });
-  el.classList.add('selected');
-  el.querySelector('.rc-title').classList.add('active-text');
+function selCards(wrapId, el){
+  document.getElementById(wrapId).querySelectorAll('label').forEach(l=>l.classList.remove('sel'));
+  el.classList.add('sel');
 }
-
-function selectPill(btn){
-  btn.closest('div').querySelectorAll('.btn-pill').forEach(b=>{
-    b.style.background='var(--bg3)';
-    b.style.borderColor='var(--border)';
-    b.style.color='var(--text2)';
-  });
-  btn.style.background='var(--accent)';
-  btn.style.borderColor='var(--accent)';
-  btn.style.color='#fff';
+function selTf(btn){
+  document.getElementById('tf-wrap').querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
 }
-
-function toggleSub(){
-  const on=document.getElementById('sub-toggle').checked;
-  const f=document.getElementById('max-sub-field');
-  f.style.opacity=on?'1':'0.4';
-  f.style.pointerEvents=on?'auto':'none';
+function selSlot(btn){
+  document.getElementById('slot-wrap').querySelectorAll('.sb').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
 }
-
-function toggleFee(){
-  const on=document.getElementById('fee-toggle').checked;
+function selGroup(btn){
+  document.getElementById('grp-wrap').querySelectorAll('.gb').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
 }
-function togglePrize(){}
-
-function updateCharCount(el,id,max){
-  document.getElementById(id).textContent=el.value.length;
+function selRadio(wrapId, el){
+  document.getElementById(wrapId).querySelectorAll('.ro').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
 }
-
-function syncPct(n){
-  const total=+(document.getElementById('total-prize').value)||10000;
-  const amt=+(document.getElementById('pamt-'+n).value)||0;
-  document.getElementById('ppct-'+n).value=Math.round(amt/total*100);
+function toggleTeam(el){
+  el.classList.toggle('off');
 }
-function syncAmt(n){
-  const total=+(document.getElementById('total-prize').value)||10000;
-  const pct=+(document.getElementById('ppct-'+n).value)||0;
-  document.getElementById('pamt-'+n).value=Math.round(total*pct/100);
+function syncPrize(){
+  const p1=+(document.getElementById('pct1').value)||0;
+  const p2=+(document.getElementById('pct2').value)||0;
+  const p3=+(document.getElementById('pct3').value)||0;
+  const total=p1+p2+p3;
+  const lbl=document.getElementById('ptotal');
+  lbl.textContent='Total: '+total+'%';
+  lbl.style.color=total===100?'#22c55e':total>100?'#ef4444':'#fbbf24';
 }
-function updatePrizeDist(){
-  [1,2,3].forEach(n=>syncAmt(n));
-}
-
-let prizeRankCount=3;
-const medals=['🥇','🥈','🥉'];
-const ordinals=['1st','2nd','3rd','4th','5th','6th'];
-function addPrizeRank(){
-  prizeRankCount++;
-  const row=document.createElement('div');
-  row.className='prize-dist-row';
-  row.innerHTML=`<div class="prize-place"><span class="prize-medal">🏅</span><div><div class="prize-name">${ordinals[prizeRankCount-1]||prizeRankCount+'th'} Place</div></div></div><div class="prize-inputs"><select style="width:70px"><option>BDT</option><option>Coin</option></select><input type="number" value="0" style="flex:1"><div class="prize-pct-wrap"><input type="number" value="0" min="0" max="100" style="width:60px;text-align:center"><span class="pct-sign">%</span></div></div>`;
-  document.getElementById('prize-rows').appendChild(row);
-}
-
 function showToast(msg,color){
   const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.style.background=color||'#22c55e';
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
+  t.textContent=msg;t.style.background=color||'#22c55e';t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
 }
-
-function saveDraft(){
-  showToast('Draft saved successfully','#7c5cfc');
-}
-
-function publishComp(){
-  const name=document.getElementById('comp-name').value.trim();
-  if(!name){
-    showToast('Please enter a competition name','#ef4444');
-    document.getElementById('comp-name').focus();
-    return;
+function act(type){
+  const name=document.getElementById('cname').value.trim();
+  if(type==='draft') showToast('Draft saved successfully','#6c47ff');
+  else if(type==='preview') showToast('Opening competition preview...','#0ea5e9');
+  else{
+    if(!name){showToast('Please enter a competition name first','#ef4444');document.getElementById('cname').focus();return;}
+    showToast('Competition published successfully!','#22c55e');
   }
-  showToast('Competition created! Going live...','#22c55e');
 }
+syncPrize();
 </script>
+</body>
+</html>
