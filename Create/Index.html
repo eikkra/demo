@@ -1,0 +1,659 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0d14;--bg2:#13131f;--bg3:#1a1a2a;--bg4:#20203a;
+  --border:#2a2a45;--border2:#3a3a60;
+  --text:#e8e8f0;--text2:#9090b0;--text3:#5a5a80;
+  --accent:#7c5cfc;--accent2:#9b7dff;--accent-bg:rgba(124,92,252,0.12);
+  --green:#22c55e;--green-bg:rgba(34,197,94,0.1);
+  --radius:10px;--radius-sm:7px;
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0}
+.page{max-width:1100px;margin:0 auto;padding:0}
+
+/* NAV */
+nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:0;height:56px;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;color:#fff;text-decoration:none;margin-right:32px}
+.nav-logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-link{padding:0 16px;height:56px;display:flex;align-items:center;font-size:14px;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;transition:.2s}
+.nav-link:hover{color:var(--text)}
+.nav-link.active{color:var(--accent2);border-bottom-color:var(--accent)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.nav-avatar{width:32px;height:32px;border-radius:50%;background:var(--accent-bg);border:1.5px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--accent2)}
+.nav-badge{font-size:10px;background:var(--accent);color:#fff;padding:2px 7px;border-radius:20px;font-weight:600}
+
+/* PAGE HEADER */
+.page-top{padding:24px 24px 0;display:flex;align-items:center;gap:12px}
+.back-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:14px;transition:.2s;flex-shrink:0}
+.back-btn:hover{border-color:var(--border2);color:var(--text)}
+.page-heading h1{font-size:22px;font-weight:700;color:#fff;line-height:1.2}
+.page-heading p{font-size:13px;color:var(--text2);margin-top:2px}
+
+.breadcrumb-bar{padding:12px 24px 0;display:flex;align-items:center;gap:6px}
+.bc-btn{font-size:12px;color:var(--text2);background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:4px 12px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.2s}
+.bc-btn:hover{border-color:var(--border2);color:var(--text)}
+
+/* MAIN LAYOUT */
+.main{padding:24px;display:grid;grid-template-columns:1fr;gap:16px}
+
+/* SECTION CARD */
+.section-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.section-header{padding:20px 24px 0;display:flex;align-items:flex-start;gap:16px}
+.sec-num{width:36px;height:36px;border-radius:50%;background:var(--accent-bg);border:1.5px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--accent2);flex-shrink:0}
+.sec-label h2{font-size:15px;font-weight:600;color:#fff;margin-bottom:2px}
+.sec-label p{font-size:12px;color:var(--text2)}
+.section-body{padding:20px 24px 24px}
+
+/* FORM ELEMENTS */
+.form-row{margin-bottom:18px}
+.form-row:last-child{margin-bottom:0}
+.form-grid{display:grid;gap:14px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:680px){.g2,.g3{grid-template-columns:1fr}}
+
+label.field-label{display:block;font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px}
+label.field-label .req{color:#ef4444;margin-left:2px}
+
+input[type=text],input[type=number],input[type=url],input[type=datetime-local],select,textarea{
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:10px 14px;font-size:14px;color:var(--text);outline:none;transition:.2s;
+  font-family:inherit;appearance:none;-webkit-appearance:none
+}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);background:var(--bg4);box-shadow:0 0 0 3px rgba(124,92,252,0.12)}
+input::placeholder,textarea::placeholder{color:var(--text3)}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239090b0' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
+select option{background:#1a1a2a;color:var(--text)}
+textarea{resize:vertical;min-height:90px;line-height:1.5}
+
+/* RADIO CARDS */
+.radio-cards{display:grid;gap:10px}
+.radio-cards.cols3{grid-template-columns:repeat(3,1fr)}
+.radio-cards.cols2{grid-template-columns:1fr 1fr}
+@media(max-width:580px){.radio-cards.cols3,.radio-cards.cols2{grid-template-columns:1fr}}
+
+.radio-card{border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:.2s;background:var(--bg3);display:flex;align-items:flex-start;gap:12px;position:relative}
+.radio-card:hover{border-color:var(--border2)}
+.radio-card.selected{border-color:var(--accent);background:var(--accent-bg)}
+.radio-card input{display:none}
+.radio-dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--border2);flex-shrink:0;margin-top:1px;transition:.2s;display:flex;align-items:center;justify-content:center}
+.radio-card.selected .radio-dot{border-color:var(--accent);background:var(--accent)}
+.radio-dot::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;opacity:0;transition:.2s}
+.radio-card.selected .radio-dot::after{opacity:1}
+.rc-body .rc-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+.rc-body .rc-sub{font-size:12px;color:var(--text2)}
+.rc-body .rc-title.active-text{color:var(--accent2)}
+
+/* TOGGLE */
+.toggle-row{display:flex;align-items:center;gap:12px}
+.toggle{position:relative;width:44px;height:24px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:var(--bg4);border:1px solid var(--border2);border-radius:100px;cursor:pointer;transition:.2s}
+.toggle-track::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--text3);transition:.2s}
+.toggle input:checked + .toggle-track{background:var(--accent);border-color:var(--accent)}
+.toggle input:checked + .toggle-track::after{left:23px;background:#fff}
+.toggle-label{font-size:14px;color:var(--text)}
+.toggle-hint{font-size:12px;color:var(--text2)}
+
+/* NUMBER INPUT ROW */
+.num-field{position:relative}
+.num-field input{padding-right:50px}
+.num-unit{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text2);font-weight:600;pointer-events:none}
+
+/* PRIZE DISTRIBUTION */
+.prize-dist-row{display:flex;align-items:center;gap:12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px}
+.prize-place{display:flex;align-items:center;gap:10px;min-width:90px}
+.prize-medal{font-size:20px}
+.prize-name{font-size:13px;font-weight:600;color:var(--text)}
+.prize-sub{font-size:11px;color:var(--text2)}
+.prize-inputs{display:flex;gap:8px;flex:1;align-items:center}
+.prize-inputs input{flex:1;min-width:80px}
+.prize-pct-wrap{display:flex;align-items:center;gap:4px}
+.prize-pct-wrap input{width:64px;text-align:center}
+.pct-sign{font-size:13px;color:var(--text2);font-weight:600}
+.add-prize-btn{border:1px dashed var(--border2);border-radius:var(--radius-sm);padding:10px;text-align:center;font-size:13px;color:var(--text2);cursor:pointer;transition:.2s;background:transparent;width:100%;margin-top:8px}
+.add-prize-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* SUBSTITUTES TOGGLE ROW */
+.sub-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:end}
+@media(max-width:500px){.sub-row{grid-template-columns:1fr}}
+
+/* SECTION DIVIDER */
+.sec-div{height:1px;background:var(--border);margin:0 24px}
+
+/* BOTTOM BAR */
+.bottom-bar{position:sticky;bottom:0;background:var(--bg2);border-top:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:50}
+.btn-draft{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 18px;font-size:14px;font-weight:600;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:7px;transition:.2s;font-family:inherit}
+.btn-draft:hover{border-color:var(--accent);color:var(--accent)}
+.btn-publish{background:var(--accent);border:none;border-radius:8px;padding:11px 22px;font-size:14px;font-weight:600;color:#fff;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.2s;font-family:inherit}
+.btn-publish:hover{background:var(--accent2)}
+.btn-publish svg{width:16px;height:16px}
+
+/* SUCCESS TOAST */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#22c55e;color:#fff;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;z-index:999;opacity:0;pointer-events:none;transition:.3s}
+.toast.show{opacity:1}
+
+/* SECTION DIVIDER LINE */
+.form-divider{height:1px;background:var(--border);margin:18px 0}
+</style>
+
+<h2 class="sr-only">eKickHub — Create New Competition Form</h2>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14M12 2v20M2 12h20"/></svg>
+    </div>
+    eKickHub
+  </div>
+  <div class="nav-link">Dashboard</div>
+  <div class="nav-link active">Competitions</div>
+  <div class="nav-link">Teams</div>
+  <div class="nav-link">Players</div>
+  <div class="nav-link">Transactions</div>
+  <div class="nav-right">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9090b0" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9090b0" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    <div class="nav-avatar">OR</div>
+    <div class="nav-badge">Pro</div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-top">
+    <div class="back-btn" onclick="">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+    </div>
+    <div class="page-heading">
+      <h1>Create New Competition</h1>
+      <p>Set up your tournament details and rules</p>
+    </div>
+  </div>
+  <div class="breadcrumb-bar">
+    <div class="bc-btn">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      Back to Competitions
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- 01 BASIC INFORMATION -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="sec-num">01</div>
+        <div class="sec-label">
+          <h2>Basic Information</h2>
+          <p>Tell us about your competition</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="form-row">
+          <div class="form-grid g2">
+            <div>
+              <label class="field-label">Competition Name <span class="req">*</span></label>
+              <input type="text" id="comp-name" placeholder="Enter competition name">
+            </div>
+            <div>
+              <label class="field-label">Game / Category <span class="req">*</span></label>
+              <select id="comp-game">
+                <option value="">Select game or category</option>
+                <option>eFootball</option>
+                <option>FIFA</option>
+                <option>PES</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="field-label">Competition Type <span class="req">*</span></label>
+          <div class="radio-cards cols3" id="type-cards">
+            <label class="radio-card selected" onclick="selectCard('type',this)">
+              <input type="radio" name="comp-type" value="pvp" checked>
+              <div class="radio-dot"></div>
+              <div class="rc-body">
+                <div class="rc-title active-text">Player vs Player</div>
+                <div class="rc-sub">Individual players</div>
+              </div>
+            </label>
+            <label class="radio-card" onclick="selectCard('type',this)">
+              <input type="radio" name="comp-type" value="cvc">
+              <div class="radio-dot"></div>
+              <div class="rc-body">
+                <div class="rc-title">Club vs Club</div>
+                <div class="rc-sub">Teams or clubs</div>
+              </div>
+            </label>
+            <label class="radio-card" onclick="selectCard('type',this)">
+              <input type="radio" name="comp-type" value="both">
+              <div class="radio-dot"></div>
+              <div class="rc-body">
+                <div class="rc-title">Both</div>
+                <div class="rc-sub">Both players & clubs</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-grid g3">
+            <div>
+              <label class="field-label">Format <span class="req">*</span></label>
+              <select>
+                <option>Knockout</option>
+                <option>Round Robin + KO</option>
+                <option>Group League</option>
+                <option>Double Elimination</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">Team Size <span class="req">*</span></label>
+              <select>
+                <option>1 v 1</option>
+                <option>2 v 2</option>
+                <option selected>5 v 5</option>
+                <option>6 v 6</option>
+                <option>11 v 11</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">Visibility <span class="req">*</span></label>
+              <select>
+                <option>Public</option>
+                <option>Private</option>
+                <option>Invite Only</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="field-label">Short Description</label>
+          <textarea id="comp-desc" placeholder="Briefly describe your competition..." maxlength="200" oninput="updateCharCount(this,'desc-count',200)"></textarea>
+          <div style="text-align:right;font-size:11px;color:var(--text3);margin-top:4px"><span id="desc-count">0</span>/200</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 PARTICIPANTS & REGISTRATION -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="sec-num">02</div>
+        <div class="sec-label">
+          <h2>Participants &amp; Registration</h2>
+          <p>Manage who can join</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="form-row">
+          <label class="field-label">Who can join?</label>
+          <div style="display:flex;gap:8px;margin-bottom:18px">
+            <button class="btn-pill active" onclick="selectPill(this)" style="background:var(--accent);border:1.5px solid var(--accent);border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;transition:.2s;font-family:inherit">Anyone</button>
+            <button class="btn-pill" onclick="selectPill(this)" style="background:var(--bg3);border:1.5px solid var(--border);border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;transition:.2s;font-family:inherit">Invite Only</button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-grid g3">
+            <div>
+              <label class="field-label">Registration Start</label>
+              <input type="datetime-local" id="reg-start">
+            </div>
+            <div>
+              <label class="field-label">Registration End</label>
+              <input type="datetime-local" id="reg-end">
+            </div>
+            <div>
+              <label class="field-label">Max Teams / Players</label>
+              <input type="number" value="64" min="2">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-grid g3">
+            <div>
+              <label class="field-label">Min Players per Team</label>
+              <input type="number" value="5" min="1">
+            </div>
+            <div>
+              <label class="field-label">Max Players per Team</label>
+              <input type="number" value="5" min="1">
+            </div>
+            <div></div>
+          </div>
+          <div style="font-size:12px;color:var(--text2);margin-top:6px">
+            <div style="margin-bottom:3px">Minimum players required in a team</div>
+          </div>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <div class="sub-row form-row">
+          <div>
+            <label class="field-label">Substitute Players</label>
+            <div class="toggle-row">
+              <label class="toggle">
+                <input type="checkbox" id="sub-toggle" onchange="toggleSub()">
+                <div class="toggle-track"></div>
+              </label>
+              <div>
+                <div class="toggle-label">Allow substitutes</div>
+                <div class="toggle-hint">Teams can register substitute players</div>
+              </div>
+            </div>
+          </div>
+          <div id="max-sub-field" style="opacity:.4;pointer-events:none;transition:.2s">
+            <label class="field-label">Max Substitutes</label>
+            <input type="number" value="2" min="0" max="10">
+            <div style="font-size:12px;color:var(--text2);margin-top:5px">Maximum substitute players per team</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 ENTRY FEE & PRIZE -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="sec-num">03</div>
+        <div class="sec-label">
+          <h2>Entry Fee &amp; Prize</h2>
+          <p>Set fees and rewards</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="form-grid g2" style="margin-bottom:18px">
+          <div>
+            <label class="field-label">Entry Fee</label>
+            <div class="toggle-row" style="margin-bottom:12px">
+              <label class="toggle">
+                <input type="checkbox" id="fee-toggle" onchange="toggleFee()" checked>
+                <div class="toggle-track"></div>
+              </label>
+              <span class="toggle-label">Enable entry fee</span>
+            </div>
+            <label class="field-label">Amount</label>
+            <div style="display:flex;gap:8px">
+              <select style="width:90px">
+                <option>BDT</option>
+                <option>USD</option>
+                <option>Coin</option>
+              </select>
+              <input type="number" value="100" min="0" style="flex:1">
+            </div>
+            <div style="font-size:12px;color:var(--text2);margin-top:5px">Entry fee per team</div>
+          </div>
+          <div>
+            <label class="field-label">Prize Pool</label>
+            <div class="toggle-row" style="margin-bottom:12px">
+              <label class="toggle">
+                <input type="checkbox" id="prize-toggle" onchange="togglePrize()" checked>
+                <div class="toggle-track"></div>
+              </label>
+              <span class="toggle-label">Enable prize pool</span>
+            </div>
+            <label class="field-label">Total Prize (BDT)</label>
+            <div style="display:flex;gap:8px">
+              <select style="width:90px">
+                <option>BDT</option>
+                <option>USD</option>
+                <option>Coin</option>
+              </select>
+              <input type="number" id="total-prize" value="10000" min="0" oninput="updatePrizeDist()">
+            </div>
+            <div style="font-size:12px;color:var(--text2);margin-top:5px">Total prize money for the competition</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="field-label">Prize Distribution</label>
+          <div id="prize-rows" style="display:flex;flex-direction:column;gap:8px">
+            <div class="prize-dist-row">
+              <div class="prize-place">
+                <span class="prize-medal">🥇</span>
+                <div><div class="prize-name">1st Place</div></div>
+              </div>
+              <div class="prize-inputs">
+                <select style="width:70px"><option>BDT</option><option>Coin</option></select>
+                <input type="number" class="prize-amt" id="pamt-1" value="6000" style="flex:1" oninput="syncPct(1)">
+                <div class="prize-pct-wrap">
+                  <input type="number" class="prize-pct" id="ppct-1" value="60" min="0" max="100" style="width:60px;text-align:center" oninput="syncAmt(1)">
+                  <span class="pct-sign">%</span>
+                </div>
+              </div>
+            </div>
+            <div class="prize-dist-row">
+              <div class="prize-place">
+                <span class="prize-medal">🥈</span>
+                <div><div class="prize-name">2nd Place</div></div>
+              </div>
+              <div class="prize-inputs">
+                <select style="width:70px"><option>BDT</option><option>Coin</option></select>
+                <input type="number" class="prize-amt" id="pamt-2" value="3000" style="flex:1" oninput="syncPct(2)">
+                <div class="prize-pct-wrap">
+                  <input type="number" class="prize-pct" id="ppct-2" value="30" min="0" max="100" style="width:60px;text-align:center" oninput="syncAmt(2)">
+                  <span class="pct-sign">%</span>
+                </div>
+              </div>
+            </div>
+            <div class="prize-dist-row">
+              <div class="prize-place">
+                <span class="prize-medal">🥉</span>
+                <div><div class="prize-name">3rd Place</div></div>
+              </div>
+              <div class="prize-inputs">
+                <select style="width:70px"><option>BDT</option><option>Coin</option></select>
+                <input type="number" class="prize-amt" id="pamt-3" value="1000" style="flex:1" oninput="syncPct(3)">
+                <div class="prize-pct-wrap">
+                  <input type="number" class="prize-pct" id="ppct-3" value="10" min="0" max="100" style="width:60px;text-align:center" oninput="syncAmt(3)">
+                  <span class="pct-sign">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="add-prize-btn" onclick="addPrizeRank()">+ Add Prize Rank</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 SCHEDULE -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="sec-num">04</div>
+        <div class="sec-label">
+          <h2>Schedule</h2>
+          <p>When will it happen?</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="form-grid g2 form-row">
+          <div>
+            <label class="field-label">Competition Start Date</label>
+            <input type="date" value="2025-06-05">
+          </div>
+          <div>
+            <label class="field-label">Start Time</label>
+            <input type="time" value="20:00">
+          </div>
+        </div>
+        <div class="form-grid g2 form-row">
+          <div>
+            <label class="field-label">Estimated Duration</label>
+            <select>
+              <option>1 Day</option>
+              <option>2 Days</option>
+              <option selected>3 Days</option>
+              <option>1 Week</option>
+              <option>2 Weeks</option>
+              <option>1 Month</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">Timezone</label>
+            <select>
+              <option selected>(GMT+6) Dhaka, Bangladesh</option>
+              <option>(UTC) Coordinated Universal Time</option>
+              <option>(GMT+5:30) India Standard Time</option>
+              <option>(GMT+8) China Standard Time</option>
+              <option>(GMT-5) Eastern Standard Time</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 RULES & SETTINGS -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="sec-num">05</div>
+        <div class="sec-label">
+          <h2>Rules &amp; Settings</h2>
+          <p>Set rules and match settings</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="form-grid g3 form-row">
+          <div>
+            <label class="field-label">Game Mode / Map Pool</label>
+            <select>
+              <option>Classic</option>
+              <option>Career</option>
+              <option>Quick Match</option>
+            </select>
+            <div style="font-size:12px;color:var(--text2);margin-top:5px">Select game mode or maps</div>
+          </div>
+          <div>
+            <label class="field-label">Match Settings</label>
+            <select>
+              <option>Best of 1</option>
+              <option selected>Best of 3</option>
+              <option>Best of 5</option>
+            </select>
+            <div style="font-size:12px;color:var(--text2);margin-top:5px">Match format</div>
+          </div>
+          <div>
+            <label class="field-label">Custom Rules</label>
+            <div class="toggle-row" style="margin-top:4px">
+              <label class="toggle">
+                <input type="checkbox" id="rules-toggle">
+                <div class="toggle-track"></div>
+              </label>
+              <div>
+                <div class="toggle-label">Add custom rules</div>
+                <div class="toggle-hint">Add special rules for your competition</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="field-label">Additional Rules</label>
+          <textarea placeholder="Enter any additional rules or instructions..." maxlength="500" oninput="updateCharCount(this,'rules-count',500)" style="min-height:110px"></textarea>
+          <div style="text-align:right;font-size:11px;color:var(--text3);margin-top:4px"><span id="rules-count">0</span>/500</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /page -->
+
+<div class="bottom-bar">
+  <button class="btn-draft" onclick="saveDraft()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+    Save as Draft
+  </button>
+  <button class="btn-publish" onclick="publishComp()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+    Create Competition
+  </button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function selectCard(group,el){
+  el.closest('.radio-cards').querySelectorAll('.radio-card').forEach(c=>{
+    c.classList.remove('selected');
+    c.querySelector('.rc-title').classList.remove('active-text');
+  });
+  el.classList.add('selected');
+  el.querySelector('.rc-title').classList.add('active-text');
+}
+
+function selectPill(btn){
+  btn.closest('div').querySelectorAll('.btn-pill').forEach(b=>{
+    b.style.background='var(--bg3)';
+    b.style.borderColor='var(--border)';
+    b.style.color='var(--text2)';
+  });
+  btn.style.background='var(--accent)';
+  btn.style.borderColor='var(--accent)';
+  btn.style.color='#fff';
+}
+
+function toggleSub(){
+  const on=document.getElementById('sub-toggle').checked;
+  const f=document.getElementById('max-sub-field');
+  f.style.opacity=on?'1':'0.4';
+  f.style.pointerEvents=on?'auto':'none';
+}
+
+function toggleFee(){
+  const on=document.getElementById('fee-toggle').checked;
+}
+function togglePrize(){}
+
+function updateCharCount(el,id,max){
+  document.getElementById(id).textContent=el.value.length;
+}
+
+function syncPct(n){
+  const total=+(document.getElementById('total-prize').value)||10000;
+  const amt=+(document.getElementById('pamt-'+n).value)||0;
+  document.getElementById('ppct-'+n).value=Math.round(amt/total*100);
+}
+function syncAmt(n){
+  const total=+(document.getElementById('total-prize').value)||10000;
+  const pct=+(document.getElementById('ppct-'+n).value)||0;
+  document.getElementById('pamt-'+n).value=Math.round(total*pct/100);
+}
+function updatePrizeDist(){
+  [1,2,3].forEach(n=>syncAmt(n));
+}
+
+let prizeRankCount=3;
+const medals=['🥇','🥈','🥉'];
+const ordinals=['1st','2nd','3rd','4th','5th','6th'];
+function addPrizeRank(){
+  prizeRankCount++;
+  const row=document.createElement('div');
+  row.className='prize-dist-row';
+  row.innerHTML=`<div class="prize-place"><span class="prize-medal">🏅</span><div><div class="prize-name">${ordinals[prizeRankCount-1]||prizeRankCount+'th'} Place</div></div></div><div class="prize-inputs"><select style="width:70px"><option>BDT</option><option>Coin</option></select><input type="number" value="0" style="flex:1"><div class="prize-pct-wrap"><input type="number" value="0" min="0" max="100" style="width:60px;text-align:center"><span class="pct-sign">%</span></div></div>`;
+  document.getElementById('prize-rows').appendChild(row);
+}
+
+function showToast(msg,color){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.background=color||'#22c55e';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+function saveDraft(){
+  showToast('Draft saved successfully','#7c5cfc');
+}
+
+function publishComp(){
+  const name=document.getElementById('comp-name').value.trim();
+  if(!name){
+    showToast('Please enter a competition name','#ef4444');
+    document.getElementById('comp-name').focus();
+    return;
+  }
+  showToast('Competition created! Going live...','#22c55e');
+}
+</script>
